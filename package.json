@@ -8,5 +8,9 @@
   },
   "peerDependencies": {
     "typescript": "^5"
+  },
+  "dependencies": {
+    "@mswjs/interceptors": "^0.39.6",
+    "protobufjs": "^7.5.4"
   }
 }

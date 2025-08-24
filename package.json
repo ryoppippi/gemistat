@@ -4,10 +4,11 @@
   "type": "module",
   "private": true,
   "devDependencies": {
-    "@types/bun": "latest"
-  },
-  "peerDependencies": {
-    "typescript": "^5"
+    "@mizchi/lsmcp": "^0.10.0",
+    "@praha/byethrow": "^0.6.3",
+    "@praha/byethrow-mcp": "^0.1.2",
+    "@types/bun": "latest",
+    "@typescript/native-preview": "^7.0.0-dev.20250824.1"
   },
   "dependencies": {}
 }

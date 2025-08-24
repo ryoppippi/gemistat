@@ -36,3 +36,6 @@ report.[0-9]_.[0-9]_.[0-9]_.[0-9]_.json
 # gemini-usage specific files
 gemini-usage-debug.log
 gemini-telemetry.jsonl
+
+# lsmcp cache
+.lsmcp/cache

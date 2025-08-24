@@ -4,20 +4,15 @@
 	"version": "0.1.0",
 	"private": true,
 	"description": "Gemini CLI wrapper with usage tracking",
-	"module": "index.ts",
+	"module": "src/index.ts",
 	"scripts": {
 		"build": "tsdown",
 		"format": "bun run lint --fix",
 		"lint": "eslint --cache .",
 		"prepare": "git config --local core.hooksPath .githooks",
-		"start": "bun run index.ts",
+		"start": "bun run src/index.ts",
+		"test": "vitest",
 		"typecheck": "tsgo --noEmit"
-	},
-	"dependencies": {
-		"cli-table3": "^0.6.5",
-		"gunshi": "latest",
-		"picocolors": "^1.1.1",
-		"string-width": "^7.2.0"
 	},
 	"devDependencies": {
 		"@mizchi/lsmcp": "^0.10.0",
@@ -25,11 +20,19 @@
 		"@praha/byethrow-mcp": "^0.1.2",
 		"@ryoppippi/eslint-config": "^0.3.7",
 		"@typescript/native-preview": "^7.0.0-dev.20250824.1",
+		"cli-table3": "^0.6.5",
 		"eslint": "^9.34.0",
 		"eslint-plugin-format": "^1.0.1",
+		"gunshi": "latest",
 		"lint-staged": "^16.1.5",
+		"picocolors": "^1.1.1",
+		"publint": "^0.3.12",
 		"sort-package-json": "^3.4.0",
-		"tsdown": "^0.14.1"
+		"string-width": "^7.2.0",
+		"tsdown": "^0.14.1",
+		"unplugin-macros": "^0.18.0",
+		"unplugin-unused": "^0.5.2",
+		"vitest": "^3.2.4"
 	},
 	"lint-staged": {
 		"*": [

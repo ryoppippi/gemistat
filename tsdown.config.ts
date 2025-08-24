@@ -1,4 +1,5 @@
 import { defineConfig } from 'tsdown';
+import Macros from 'unplugin-macros/rolldown';
 
 export default defineConfig({
 	entry: [
@@ -24,4 +25,9 @@ export default defineConfig({
 		'import.meta.vitest': 'undefined',
 	},
 	onSuccess: 'sort-package-json',
+	plugins: [
+		Macros({
+			include: ['src/index.ts', 'src/pricing.ts'],
+		}),
+	],
 });

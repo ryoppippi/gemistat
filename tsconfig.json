@@ -3,20 +3,23 @@
 		"target": "ESNext",
 		"jsx": "react-jsx",
 		// Environment setup & latest features
-		"lib": ["ESNext"],
+		"lib": [
+			"ESNext"
+		],
 		"moduleDetection": "force",
 		"module": "Preserve",
-
 		// Bundler mode
 		"moduleResolution": "bundler",
+		"types": [
+			"vitest/globals",
+			"vitest/importMeta"
+		],
 		"allowImportingTsExtensions": true,
 		"allowJs": true,
-
 		// Best practices
 		"strict": true,
 		"noFallthroughCasesInSwitch": true,
 		"noImplicitOverride": true,
-
 		"noPropertyAccessFromIndexSignature": false,
 		"noUncheckedIndexedAccess": true,
 		// Some stricter flags (disabled by default)

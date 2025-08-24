@@ -20,6 +20,9 @@
 		"test": "vitest",
 		"typecheck": "tsgo --noEmit"
 	},
+	"dependencies": {
+		"zod": "^4.1.1"
+	},
 	"devDependencies": {
 		"@mizchi/lsmcp": "^0.10.0",
 		"@praha/byethrow": "^0.6.3",

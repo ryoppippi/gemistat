@@ -1,4 +1,5 @@
-import type { TelemetryEvent } from './_types';
+import type { TelemetryEvent } from './_types.ts';
+import { telemetryEventSchema } from './_schemas.ts';
 
 /**
  * Parse OpenTelemetry log records from JSONL content
@@ -47,7 +48,7 @@ export function parseTelemetryContent(content: string): TelemetryEvent[] {
 
 					// Only process API response events for usage tracking
 					if (eventName === 'gemini_cli.api_response') {
-						const event: TelemetryEvent = {
+						const rawEvent: TelemetryEvent = {
 							timestamp: attrs['event.timestamp'] ?? '',
 							model: attrs.model,
 							inputTokens: attrs.input_token_count,
@@ -56,7 +57,14 @@ export function parseTelemetryContent(content: string): TelemetryEvent[] {
 							thoughtsTokens: attrs.thoughts_token_count,
 							toolTokens: attrs.tool_token_count,
 						};
-						events.push(event);
+
+						// Validate the event with Zod schema
+						const validationResult = telemetryEventSchema.safeParse(rawEvent);
+						if (!validationResult.success) {
+							continue; // Skip invalid events silently
+						}
+
+						events.push(validationResult.data as TelemetryEvent);
 					}
 				}
 			}

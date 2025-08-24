@@ -1,4 +1,4 @@
-import type { DailyUsage, MonthlyUsage, TelemetryEvent, Totals } from './_types';
+import type { DailyUsage, MonthlyUsage, TelemetryEvent, Totals } from './_types.ts';
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { homedir } from 'node:os';
 import { join } from 'node:path';

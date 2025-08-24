@@ -131,3 +131,70 @@ gemini-cli → telemetry file → TelemetryWatcher → events → StatsDisplay �
 - Supports all gemini-cli models with automatic pricing from LiteLLM
 - Experimental models (like gemini-2.0-flash-exp) are tracked as "Free" during experimental phase
 - Handles various token types: input, output, cached, thoughts, tools
+
+## Code Style Notes
+
+- Uses ESLint for linting and formatting with tab indentation and double quotes
+- TypeScript with strict mode and bundler module resolution
+- No console.log allowed except where explicitly disabled with eslint-disable
+- Error handling: silently skips malformed JSONL lines during parsing
+- File paths always use Node.js path utilities for cross-platform compatibility
+- **Import conventions**: Use `.ts` extensions for local file imports (e.g., `import { foo } from './utils.ts'`)
+
+**Error Handling:**
+
+- **Prefer @praha/byethrow Result type** over traditional try-catch for functional error handling
+  - Documentation: Available via byethrow MCP server
+- Use `Result.try()` for wrapping operations that may throw (JSON parsing, etc.)
+- Use `Result.isFailure()` for checking errors (more readable than `!Result.isSuccess()`)
+- Use early return pattern (`if (Result.isFailure(result)) continue;`) instead of ternary operators
+- For async operations: create wrapper function with `Result.try()` then call it
+- Keep traditional try-catch only for: file I/O with complex error handling, legacy code that's hard to refactor
+- Always use `Result.isFailure()` and `Result.isSuccess()` type guards for better code clarity
+
+**Naming Conventions:**
+
+- Variables: start with lowercase (camelCase) - e.g., `usageDataSchema`, `modelBreakdownSchema`
+- Types: start with uppercase (PascalCase) - e.g., `UsageData`, `ModelBreakdown`
+- Constants: can use UPPER_SNAKE_CASE - e.g., `DEFAULT_CLAUDE_CODE_PATH`
+- Internal files: use underscore prefix - e.g., `_types.ts`, `_utils.ts`, `_consts.ts`
+
+**Export Rules:**
+
+- **IMPORTANT**: Only export constants, functions, and types that are actually used by other modules
+- Internal/private constants that are only used within the same file should NOT be exported
+- Always check if a constant is used elsewhere before making it `export const` vs just `const`
+- This follows the principle of minimizing the public API surface area
+- Dependencies should always be added as `devDependencies` unless explicitly requested otherwise
+
+**Post-Code Change Workflow:**
+
+After making any code changes, ALWAYS run these commands in parallel:
+
+- `bun run format` - Auto-fix and format code with ESLint (includes linting)
+- `bun typecheck` - Type check with TypeScript
+- `bun run test` - Run all tests
+
+This ensures code quality and catches issues immediately after changes.
+
+**LiteLLM Integration Notes:**
+
+- Cost calculations require exact model name matches with LiteLLM's database
+- Test failures often indicate model names don't exist in LiteLLM's pricing data
+- Future model updates require checking LiteLLM compatibility first
+- The application cannot calculate costs for models not supported by LiteLLM
+
+# Tips for Claude Code
+
+- [gunshi](https://gunshi.dev/llms.txt) - Documentation available via Gunshi MCP server
+- Context7 MCP server available for library documentation lookup
+- do not use console.log. use logger.ts instead
+- **IMPORTANT**: When searching for TypeScript functions, types, or symbols in the codebase, ALWAYS use TypeScript MCP (lsmcp) tools like `get_definitions`, `find_references`, `get_hover`, etc. DO NOT use grep/rg for searching TypeScript code structures.
+
+# important-instruction-reminders
+
+Do what has been asked; nothing more, nothing less.
+NEVER create files unless they're absolutely necessary for achieving your goal.
+ALWAYS prefer editing an existing file to creating a new one.
+NEVER proactively create documentation files (\*.md) or README files. Only create documentation files if explicitly requested by the User.
+Dependencies should always be added as devDependencies unless explicitly requested otherwise.

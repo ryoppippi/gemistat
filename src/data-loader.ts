@@ -2,6 +2,7 @@ import type { DailyUsage, MonthlyUsage, TelemetryEvent, Totals } from './_types'
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { homedir } from 'node:os';
 import { join } from 'node:path';
+import { logger } from './logger';
 import { calculateCost } from './pricing';
 import { parseTelemetryContent } from './telemetry-parser';
 
@@ -36,14 +37,14 @@ export async function loadTelemetryData(outputDir?: string): Promise<TelemetryEv
 				events.push(...fileEvents);
 			}
 			catch {
-				console.warn(`Failed to read telemetry file: ${filePath}`);
+				logger.warn(`Failed to read telemetry file: ${filePath}`);
 			}
 		}
 
 		return events;
 	}
 	catch {
-		console.warn(`Failed to read telemetry directory: ${dir}`);
+		logger.warn(`Failed to read telemetry directory: ${dir}`);
 		return [];
 	}
 }

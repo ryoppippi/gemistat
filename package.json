@@ -27,6 +27,7 @@
 		"@ryoppippi/eslint-config": "^0.3.7",
 		"@typescript/native-preview": "^7.0.0-dev.20250824.1",
 		"cli-table3": "^0.6.5",
+		"consola": "^3.4.2",
 		"eslint": "^9.34.0",
 		"eslint-plugin-format": "^1.0.1",
 		"gunshi": "latest",

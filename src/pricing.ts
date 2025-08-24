@@ -135,7 +135,7 @@ export async function fetchPricingData(offline = false): Promise<Map<string, Mod
 			return pricing;
 		}
 		catch {
-			// Don't use console.error since it interferes with UI
+			// Use logger for errors, but avoid during UI display to prevent interference
 			// Return experimental models only as fallback
 			const fallback = new Map(Object.entries(EXPERIMENTAL_MODELS));
 			pricingCache = fallback;
@@ -196,7 +196,7 @@ export async function getModelPricing(
 		}
 	}
 
-	// Don't use console.warn since it interferes with UI
+	// Use logger for warnings, but avoid during UI display to prevent interference
 	return null;
 }
 

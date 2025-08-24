@@ -1,5 +1,5 @@
 import type { DailyUsage, MonthlyUsage, TelemetryEvent, Totals } from './_schemas.ts';
-import { existsSync, readdirSync, readFileSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { homedir } from 'node:os';
 import { join } from 'node:path';
 import { filterByDateRange } from './_date-utils.ts';
@@ -12,40 +12,83 @@ import { parseTelemetryContent } from './telemetry-parser';
  */
 export async function loadTelemetryData(outputDir?: string): Promise<TelemetryEvent[]> {
 	const defaultOutputDir = join(homedir(), '.gemini', 'usage');
-	const dir = outputDir ?? defaultOutputDir;
+	const baseDir = outputDir ?? defaultOutputDir;
 
-	if (!existsSync(dir)) {
+	if (!existsSync(baseDir)) {
 		return [];
 	}
 
 	const events: TelemetryEvent[] = [];
 
 	try {
-		// Read all files in the directory
-		const files = readdirSync(dir);
+		// Read all items in the base directory
+		const items = readdirSync(baseDir);
 
-		// Filter for telemetry files (.jsonl files)
-		const telemetryFiles = files.filter(file =>
-			file.endsWith('.jsonl'),
-		);
+		// Filter for date directories (YYYY-MM-DD format)
+		const dateDirs = items.filter((item) => {
+			const fullPath = join(baseDir, item);
+			const stats = statSync(fullPath);
+			return stats.isDirectory() && /^\d{4}-\d{2}-\d{2}$/.test(item);
+		});
 
-		for (const fileName of telemetryFiles) {
-			const filePath = join(dir, fileName);
+		// Process each date directory
+		for (const dateDir of dateDirs) {
+			const datePath = join(baseDir, dateDir);
 
 			try {
-				const content = readFileSync(filePath, 'utf-8');
-				const fileEvents = parseTelemetryContent(content);
-				events.push(...fileEvents);
+				const files = readdirSync(datePath);
+
+				// Filter for UUID.jsonl files
+				const telemetryFiles = files.filter(file =>
+					file.endsWith('.jsonl') && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\.jsonl$/i.test(file),
+				);
+
+				for (const fileName of telemetryFiles) {
+					const filePath = join(datePath, fileName);
+
+					try {
+						const content = readFileSync(filePath, 'utf-8');
+						const fileEvents = parseTelemetryContent(content);
+						events.push(...fileEvents);
+					}
+					catch {
+						logger.warn(`Failed to read telemetry file: ${filePath}`);
+					}
+				}
 			}
 			catch {
-				logger.warn(`Failed to read telemetry file: ${filePath}`);
+				logger.warn(`Failed to read date directory: ${datePath}`);
 			}
+		}
+
+		// Also check for legacy files in the base directory for backward compatibility
+		try {
+			const baseFiles = readdirSync(baseDir);
+			const legacyTelemetryFiles = baseFiles.filter(file =>
+				file.endsWith('.jsonl') && !statSync(join(baseDir, file)).isDirectory(),
+			);
+
+			for (const fileName of legacyTelemetryFiles) {
+				const filePath = join(baseDir, fileName);
+
+				try {
+					const content = readFileSync(filePath, 'utf-8');
+					const fileEvents = parseTelemetryContent(content);
+					events.push(...fileEvents);
+				}
+				catch {
+					logger.warn(`Failed to read legacy telemetry file: ${filePath}`);
+				}
+			}
+		}
+		catch {
+			// Ignore errors when reading base directory for legacy files
 		}
 
 		return events;
 	}
 	catch {
-		logger.warn(`Failed to read telemetry directory: ${dir}`);
+		logger.warn(`Failed to read telemetry base directory: ${baseDir}`);
 		return [];
 	}
 }

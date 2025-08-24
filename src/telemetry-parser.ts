@@ -1,4 +1,4 @@
-import type { TelemetryEvent } from './_types.ts';
+import type { TelemetryEvent } from './_schemas.ts';
 import { telemetryEventSchema } from './_schemas.ts';
 
 /**
@@ -64,7 +64,7 @@ export function parseTelemetryContent(content: string): TelemetryEvent[] {
 							continue; // Skip invalid events silently
 						}
 
-						events.push(validationResult.data as TelemetryEvent);
+						events.push(validationResult.data);
 					}
 				}
 			}

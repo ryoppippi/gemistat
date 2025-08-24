@@ -3,21 +3,9 @@
  * Eliminates duplication between gemini-usage and ccusage
  */
 
+import type { LiteLLMModelData } from './_schemas.ts';
 import { LITELLM_PRICING_URL } from './_consts.ts';
-
-/**
- * Raw LiteLLM model data structure (as returned from API)
- */
-export type LiteLLMModelData = {
-	input_cost_per_token?: number;
-	output_cost_per_token?: number;
-	cache_creation_input_token_cost?: number;
-	cache_read_input_token_cost?: number;
-	max_tokens?: number;
-	max_input_tokens?: number;
-	max_output_tokens?: number;
-	[key: string]: unknown;
-};
+import { liteLLMModelDataSchema } from './_schemas.ts';
 
 /**
  * Fetches raw pricing data from LiteLLM API
@@ -32,16 +20,14 @@ export async function fetchLiteLLMData(): Promise<Record<string, LiteLLMModelDat
 	const data = await response.json() as Record<string, unknown>;
 	const result: Record<string, LiteLLMModelData> = {};
 
-	// Filter to only include models with pricing data
+	// Filter to only include models with valid pricing data
 	for (const [modelName, modelData] of Object.entries(data)) {
-		if (modelData != null && typeof modelData === 'object') {
-			const model = modelData as Record<string, unknown>;
+		const validationResult = liteLLMModelDataSchema.safeParse(modelData);
+		if (validationResult.success) {
 			// Only include models that have pricing information
-			if (
-				typeof model.input_cost_per_token === 'number'
-				|| typeof model.output_cost_per_token === 'number'
-			) {
-				result[modelName] = model as LiteLLMModelData;
+			const model = validationResult.data;
+			if (model.input_cost_per_token != null || model.output_cost_per_token != null) {
+				result[modelName] = model;
 			}
 		}
 	}

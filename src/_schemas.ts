@@ -52,9 +52,23 @@ export const totalsSchema = z.object({
 });
 
 /**
- * Type inference helpers
+ * LiteLLM model data validation schema
  */
-export type DailyUsageSchema = z.infer<typeof dailyUsageSchema>;
-export type MonthlyUsageSchema = z.infer<typeof monthlyUsageSchema>;
-export type TelemetryEventSchema = z.infer<typeof telemetryEventSchema>;
-export type TotalsSchema = z.infer<typeof totalsSchema>;
+export const liteLLMModelDataSchema = z.object({
+	input_cost_per_token: z.number().min(0).optional(),
+	output_cost_per_token: z.number().min(0).optional(),
+	cache_creation_input_token_cost: z.number().min(0).optional(),
+	cache_read_input_token_cost: z.number().min(0).optional(),
+	max_tokens: z.number().int().min(1).optional(),
+	max_input_tokens: z.number().int().min(1).optional(),
+	max_output_tokens: z.number().int().min(1).optional(),
+}).passthrough();
+
+/**
+ * Type inference from Zod schemas
+ */
+export type DailyUsage = z.infer<typeof dailyUsageSchema>;
+export type MonthlyUsage = z.infer<typeof monthlyUsageSchema>;
+export type TelemetryEvent = z.infer<typeof telemetryEventSchema>;
+export type Totals = z.infer<typeof totalsSchema>;
+export type LiteLLMModelData = z.infer<typeof liteLLMModelDataSchema>;

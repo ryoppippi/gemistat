@@ -206,41 +206,6 @@ ls ~/.gemini/usage/
 bunx gemistat daily --dir ~/.gemini/usage
 ```
 
-## Development
-
-### Running the Project
-
-```bash
-# Type checking
-bun run typecheck
-
-# Linting and formatting
-bun run lint
-bun run format
-
-# Running tests
-bun run test
-
-# Build for distribution
-bun run build
-```
-
-### Project Structure
-
-```
-src/
-├── commands/           # CLI command implementations
-│   ├── daily.ts       # Daily usage reports
-│   ├── monthly.ts     # Monthly usage reports
-│   └── wrapper.ts     # Gemini CLI wrapper
-├── _schemas.ts        # Zod validation schemas
-├── _table.ts          # Table formatting utilities
-├── data-loader.ts     # Telemetry data processing
-├── telemetry-parser.ts # OpenTelemetry event parsing
-├── pricing.ts         # LiteLLM cost calculations
-└── logger.ts          # Logging utilities
-```
-
 ## Sponsors
 
 <p align="center">

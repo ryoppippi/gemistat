@@ -1,5 +1,5 @@
 /**
- * @fileoverview Logging utilities for the gemini-usage application
+ * @fileoverview Logging utilities for the gemistat application
  *
  * This module provides configured logger instances using consola for consistent
  * logging throughout the application with package name tagging.

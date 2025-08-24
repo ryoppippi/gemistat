@@ -31,11 +31,11 @@ export async function runGeminiWrapper(geminiArgs: string[]): Promise<void> {
 
 	// Configure output directory and files
 	const defaultOutputDir = join(homedir(), '.gemini', 'usage');
-	const outputDir = process.env.GEMINI_USAGE_OUTPUT_DIR ?? defaultOutputDir;
+	const outputDir = process.env.GEMISTAT_OUTPUT_DIR ?? defaultOutputDir;
 
 	// Add date prefix to telemetry file name
 	const datePrefix = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
-	const baseTelemetryFileName = process.env.GEMINI_USAGE_TELEMETRY_FILE ?? 'gemini-telemetry.jsonl';
+	const baseTelemetryFileName = process.env.GEMISTAT_TELEMETRY_FILE ?? 'gemini-telemetry.jsonl';
 	const telemetryFileName = `${datePrefix}_${baseTelemetryFileName}`;
 
 	// Create output directory if it doesn't exist

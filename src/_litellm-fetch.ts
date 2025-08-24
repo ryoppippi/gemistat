@@ -1,6 +1,6 @@
 /**
  * Shared LiteLLM pricing data fetch utility
- * Eliminates duplication between gemini-usage and ccusage
+ * Eliminates duplication between gemistat and ccusage
  */
 
 import type { LiteLLMModelData } from './_schemas.ts';
@@ -54,7 +54,7 @@ export function filterModels(
 }
 
 /**
- * Pre-built filter for Gemini models (used by gemini-usage)
+ * Pre-built filter for Gemini models (used by gemistat)
  */
 export function isGeminiModel(modelName: string): boolean {
 	const lower = modelName.toLowerCase();

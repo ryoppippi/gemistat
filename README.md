@@ -1,4 +1,4 @@
-# gemini-usage
+# gemistat
 
 A wrapper for [gemini-cli](https://github.com/google-gemini/gemini-cli) that tracks token usage and costs in real-time.
 
@@ -7,15 +7,14 @@ A wrapper for [gemini-cli](https://github.com/google-gemini/gemini-cli) that tra
 - 🎯 **Accurate token tracking** - Uses gemini-cli's native telemetry system for 100% accuracy
 - 💰 **Real-time cost calculation** - Shows costs based on current LiteLLM pricing data
 - 📊 **Live statistics display** - Updates token usage and costs as you chat
-- 🔍 **Debug logging** - Detailed event logs for troubleshooting
 - 🚀 **Zero configuration** - Works out of the box with your existing gemini-cli setup
 
 ## Installation
 
 ```bash
 # Clone the repository
-git clone https://github.com/ryoppippi/gemini-usage
-cd gemini-usage
+git clone https://github.com/ryoppippi/gemistat
+cd gemistat
 
 # Install dependencies
 bun install
@@ -56,9 +55,8 @@ The wrapper will display real-time token usage and costs while preserving all ge
 
 You can customize where files are saved using environment variables:
 
-- `GEMINI_USAGE_OUTPUT_DIR` - Directory to save telemetry and debug files (default: `~/.gemini/usage`)
-- `GEMINI_USAGE_TELEMETRY_FILE` - Telemetry file name (default: `gemini-telemetry.jsonl`)
-- `GEMINI_USAGE_DEBUG_FILE` - Debug log file name (default: `gemini-usage-debug.log`)
+- `GEMISTAT_OUTPUT_DIR` - Directory to save telemetry files (default: `~/.gemini/usage`)
+- `GEMISTAT_TELEMETRY_FILE` - Telemetry file name (default: `gemini-telemetry.jsonl`)
 
 Examples:
 
@@ -67,16 +65,15 @@ Examples:
 ./index.ts chat
 
 # Custom directory
-GEMINI_USAGE_OUTPUT_DIR=/tmp/gemini-logs ./index.ts chat
+GEMISTAT_OUTPUT_DIR=/tmp/gemini-logs ./index.ts chat
 
 # Custom directory and file names
-GEMINI_USAGE_OUTPUT_DIR=/tmp/logs GEMINI_USAGE_TELEMETRY_FILE=my-telemetry.jsonl ./index.ts chat
+GEMISTAT_OUTPUT_DIR=/tmp/logs GEMISTAT_TELEMETRY_FILE=my-telemetry.jsonl ./index.ts chat
 ```
 
 ## Output files
 
 - `gemini-telemetry.jsonl` - Raw OpenTelemetry events from gemini-cli
-- `gemini-usage-debug.log` - Detailed debug information including all events and cost calculations
 
 Files are saved to the configured directory (default: `~/.gemini/usage`).
 
@@ -107,7 +104,7 @@ Pricing data is automatically fetched from [LiteLLM's model database](https://gi
 bun run tsc --noEmit
 
 # Clean up generated files
-rm -f gemini-usage-debug.log gemini-telemetry.jsonl
+rm -f gemini-telemetry.jsonl
 ```
 
 ## License

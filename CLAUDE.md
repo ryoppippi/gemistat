@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is `gemini-usage`, a wrapper for [gemini-cli](https://github.com/google-gemini/gemini-cli) that tracks token usage and costs in real-time. The project uses Bun as the runtime and TypeScript for type safety.
+This is `gemistat`, a wrapper for [gemini-cli](https://github.com/google-gemini/gemini-cli) that tracks token usage and costs in real-time. The project uses Bun as the runtime and TypeScript for type safety.
 
 ## Guide for lsmcp mcp
 
@@ -74,9 +74,8 @@ bun run index.ts --model gemini-2.0-flash-exp
 
 The application supports environment variables for configuring output directories and files:
 
-- `GEMINI_USAGE_OUTPUT_DIR` - Directory to save telemetry and debug files (default: `~/.gemini/usage`)
-- `GEMINI_USAGE_TELEMETRY_FILE` - Telemetry file name (default: `gemini-telemetry.jsonl`)
-- `GEMINI_USAGE_DEBUG_FILE` - Debug log file name (default: `gemini-usage-debug.log`)
+- `GEMISTAT_OUTPUT_DIR` - Directory to save telemetry files (default: `~/.gemini/usage`)
+- `GEMISTAT_TELEMETRY_FILE` - Telemetry file name (default: `gemini-telemetry.jsonl`)
 
 Examples:
 
@@ -85,10 +84,10 @@ Examples:
 ./index.ts chat
 
 # Custom directory
-GEMINI_USAGE_OUTPUT_DIR=/tmp/gemini-logs ./index.ts chat
+GEMISTAT_OUTPUT_DIR=/tmp/gemini-logs ./index.ts chat
 
 # Custom directory and file names
-GEMINI_USAGE_OUTPUT_DIR=/tmp/logs GEMINI_USAGE_TELEMETRY_FILE=my-telemetry.jsonl ./index.ts chat
+GEMISTAT_OUTPUT_DIR=/tmp/logs GEMISTAT_TELEMETRY_FILE=my-telemetry.jsonl ./index.ts chat
 ```
 
 ## Architecture
@@ -118,7 +117,6 @@ gemini-cli → telemetry file → TelemetryWatcher → events → StatsDisplay �
 ## Output Files
 
 - `gemini-telemetry.jsonl` - Raw OpenTelemetry events (auto-generated, in .gitignore)
-- `gemini-usage-debug.log` - Detailed debug logs for troubleshooting
 
 ## Dependencies
 

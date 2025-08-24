@@ -190,6 +190,7 @@ This ensures code quality and catches issues immediately after changes.
 - Context7 MCP server available for library documentation lookup
 - do not use console.log. use logger.ts instead
 - **IMPORTANT**: When searching for TypeScript functions, types, or symbols in the codebase, ALWAYS use TypeScript MCP (lsmcp) tools like `get_definitions`, `find_references`, `get_hover`, etc. DO NOT use grep/rg for searching TypeScript code structures.
+- **CRITICAL VITEST REMINDER**: Vitest globals are enabled - use `describe`, `it`, `expect` directly WITHOUT imports. NEVER use `await import()` dynamic imports anywhere, especially in test blocks.
 
 # important-instruction-reminders
 

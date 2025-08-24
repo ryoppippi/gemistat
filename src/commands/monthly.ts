@@ -1,5 +1,7 @@
+import process from 'node:process';
 import { define } from 'gunshi';
 import pc from 'picocolors';
+import { sharedCommandConfig } from '../_shared-args';
 import {
 	addEmptySeparatorRow,
 	createUsageReportTable,
@@ -11,16 +13,13 @@ import { calculateTotals, loadMonthlyUsageData } from '../data-loader';
 export const monthlyCommand = define({
 	name: 'monthly',
 	description: 'Show monthly usage report',
+	...sharedCommandConfig,
 	args: {
+		...sharedCommandConfig.args,
 		dir: {
 			type: 'string',
 			short: 'd',
 			description: 'Directory containing telemetry files',
-		},
-		json: {
-			type: 'boolean',
-			short: 'j',
-			description: 'Output in JSON format',
 		},
 		compact: {
 			type: 'boolean',
@@ -29,17 +28,17 @@ export const monthlyCommand = define({
 		},
 	},
 	async run(ctx) {
-		const { dir, json, compact } = ctx.values;
+		const { dir, json, compact, offline } = ctx.values;
 
 		// Load monthly usage data
-		const monthlyData = await loadMonthlyUsageData(dir);
+		const monthlyData = await loadMonthlyUsageData(dir, offline);
 
 		if (monthlyData.length === 0) {
-			if (json) {
-				console.log(JSON.stringify([]));
+			if (json === true) {
+				process.stdout.write(`${JSON.stringify([])}\n`);
 			}
 			else {
-				console.log(pc.yellow('No usage data found.'));
+				process.stdout.write(`${pc.yellow('No usage data found.')}\n`);
 			}
 			return;
 		}
@@ -47,17 +46,17 @@ export const monthlyCommand = define({
 		// Calculate totals
 		const totals = calculateTotals(monthlyData);
 
-		if (json) {
+		if (json === true) {
 			// Output JSON format
 			const jsonOutput = {
 				monthly: monthlyData,
 				totals,
 			};
-			console.log(JSON.stringify(jsonOutput, null, 2));
+			process.stdout.write(`${JSON.stringify(jsonOutput, null, 2)}\n`);
 		}
 		else {
 			// Display table format
-			console.log(pc.cyan('Gemini Usage Report - Monthly\n'));
+			process.stdout.write(pc.cyan('Gemini Usage Report - Monthly\n\n'));
 
 			const table = createUsageReportTable({
 				firstColumnName: 'Month',
@@ -88,12 +87,12 @@ export const monthlyCommand = define({
 			});
 			table.push(totalsRow);
 
-			console.log(table.toString());
+			process.stdout.write(`${table.toString()}\n`);
 
 			// Show guidance if in compact mode
 			if (table.isCompactMode()) {
-				console.log(pc.gray('\nRunning in Compact Mode'));
-				console.log(pc.gray('Expand terminal width to see all columns'));
+				process.stdout.write(pc.gray('\nRunning in Compact Mode\n'));
+				process.stdout.write(pc.gray('Expand terminal width to see all columns\n'));
 			}
 		}
 	},

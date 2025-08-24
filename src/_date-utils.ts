@@ -1,6 +1,20 @@
 /**
  * Date utility functions for filtering usage data by date ranges
  */
+import { DATE_LOCALE } from './_consts.ts';
+
+/**
+ * Formats a timestamp to local date in YYYY-MM-DD format
+ * @param timestamp - ISO timestamp string
+ * @returns Formatted date string in YYYY-MM-DD format using local timezone
+ */
+export function formatTimestampToLocalDate(timestamp: string): string {
+	return new Intl.DateTimeFormat(DATE_LOCALE, {
+		year: 'numeric',
+		month: '2-digit',
+		day: '2-digit',
+	}).format(new Date(timestamp));
+}
 
 /**
  * Filters items by date range
@@ -37,6 +51,43 @@ export function filterByDateRange<T>(
 }
 
 if (import.meta.vitest != null) {
+	describe('formatTimestampToLocalDate', () => {
+		it('should format UTC timestamp to local date', () => {
+			// Test with a UTC timestamp
+			const timestamp = '2024-01-15T14:30:45.123Z';
+			const result = formatTimestampToLocalDate(timestamp);
+
+			// Result should be in YYYY-MM-DD format
+			expect(result).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+
+			// Should be January 15th in local timezone (might vary by system timezone)
+			expect(result.startsWith('2024-01-1')).toBe(true);
+		});
+
+		it('should handle different timestamp formats', () => {
+			const timestamps = [
+				'2024-01-15T00:00:00.000Z',
+				'2024-01-15T23:59:59.999Z',
+				'2024-01-15T12:00:00Z',
+			];
+
+			for (const timestamp of timestamps) {
+				const result = formatTimestampToLocalDate(timestamp);
+				expect(result).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+				expect(result.startsWith('2024-01-1')).toBe(true);
+			}
+		});
+
+		it('should use local timezone consistently', () => {
+			// Test with midnight UTC - result depends on local timezone
+			const utcMidnight = '2024-01-15T00:00:00.000Z';
+			const result = formatTimestampToLocalDate(utcMidnight);
+
+			// Should be either Jan 14 or Jan 15 depending on timezone
+			expect(result).toMatch(/^2024-01-(14|15)$/);
+		});
+	});
+
 	describe('filterByDateRange', () => {
 		const testData = [
 			{ id: 1, date: '2024-01-01' },

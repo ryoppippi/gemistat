@@ -2,7 +2,7 @@ import type { DailyUsage, MonthlyUsage, TelemetryEvent, Totals } from './_schema
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
 import { homedir } from 'node:os';
 import { join } from 'node:path';
-import { filterByDateRange } from './_date-utils.ts';
+import { filterByDateRange, formatTimestampToLocalDate } from './_date-utils.ts';
 import { logger } from './logger';
 import { calculateCost } from './pricing';
 import { parseTelemetryContent } from './telemetry-parser';
@@ -119,7 +119,8 @@ export async function extractUsageFromTelemetry(events: TelemetryEvent[], offlin
 		// Extract relevant data from telemetry events
 		// This will depend on the actual structure of your telemetry data
 		if (event.model != null && event.model !== '' && event.timestamp != null && event.timestamp !== '') {
-			const date = new Date(event.timestamp).toISOString().split('T')[0]!;
+			// Use local timezone for date grouping instead of UTC
+			const date = formatTimestampToLocalDate(event.timestamp);
 			const model = event.model;
 			const inputTokens = event.inputTokens ?? 0;
 			const outputTokens = event.outputTokens ?? 0;

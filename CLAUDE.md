@@ -72,22 +72,26 @@ bun run index.ts --model gemini-2.0-flash-exp
 
 ## Configuration
 
-The application supports environment variables for configuring output directories and files:
+The application supports environment variables for configuring output directories:
 
-- `GEMISTAT_OUTPUT_DIR` - Directory to save telemetry files (default: `~/.gemini/usage`)
-- `GEMISTAT_TELEMETRY_FILE` - Telemetry file name (default: `gemini-telemetry.jsonl`)
+- `GEMISTAT_OUTPUT_DIR` - Base directory to save telemetry files (default: `~/.gemini/usage`)
+
+File Structure:
+
+- Files are organized as `{GEMISTAT_OUTPUT_DIR}/{YYYY-MM-DD}/uuid.jsonl`
+- Each gemini-cli session creates a unique UUID-based filename within a date directory
+- This prevents overwrites when running multiple sessions on the same day
 
 Examples:
 
 ```bash
 # Use default directory (~/.gemini/usage)
+# Creates: ~/.gemini/usage/{YYYY-MM-DD}/uuid.jsonl
 ./index.ts chat
 
 # Custom directory
+# Creates: /tmp/gemini-logs/{YYYY-MM-DD}/uuid.jsonl
 GEMISTAT_OUTPUT_DIR=/tmp/gemini-logs ./index.ts chat
-
-# Custom directory and file names
-GEMISTAT_OUTPUT_DIR=/tmp/logs GEMISTAT_TELEMETRY_FILE=my-telemetry.jsonl ./index.ts chat
 ```
 
 ## Architecture
@@ -116,7 +120,7 @@ gemini-cli → telemetry file → TelemetryWatcher → events → StatsDisplay �
 
 ## Output Files
 
-- `gemini-telemetry.jsonl` - Raw OpenTelemetry events (auto-generated, in .gitignore)
+- `{YYYY-MM-DD}/uuid.jsonl` - Raw OpenTelemetry events organized by date with unique filenames (auto-generated, in .gitignore)
 
 ## Dependencies
 

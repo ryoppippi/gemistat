@@ -127,22 +127,20 @@ Customize telemetry file locations:
 
 ```bash
 # Default configuration
-~/.gemini/usage/YYYY-MM-DD_gemini-telemetry.jsonl
+~/.gemini/usage/{YYYY-MM-DD}/uuid.jsonl
 
 # Custom directory
 GEMISTAT_OUTPUT_DIR=/tmp/gemini-logs ./index.ts chat
-
-# Custom filename
-GEMISTAT_TELEMETRY_FILE=my-usage.jsonl ./index.ts chat
-
-# Combined custom settings
-GEMISTAT_OUTPUT_DIR=/tmp/logs GEMISTAT_TELEMETRY_FILE=usage.jsonl ./index.ts chat
+# Results in: /tmp/gemini-logs/{YYYY-MM-DD}/uuid.jsonl
 ```
+
+> **Note**: Files are now organized by date directories with UUID-based filenames to prevent overwrites during multiple sessions on the same day.
 
 ### Output Files
 
-- `YYYY-MM-DD_gemini-telemetry.jsonl` - Raw OpenTelemetry events (auto-generated, date-prefixed)
+- `{YYYY-MM-DD}/uuid.jsonl` - Raw OpenTelemetry events (auto-generated, organized by date with unique UUID filenames)
 - Files are saved to `~/.gemini/usage/` by default
+- Each gemini-cli session creates a unique UUID-based file within the appropriate date directory
 
 ## How It Works
 
@@ -160,7 +158,7 @@ These OpenTelemetry events are then combined with the latest token pricing data 
 
 ```bash
 # gemistat automatically adds these flags to gemini-cli
-gemini chat --telemetry --telemetry-target=local --telemetry-outfile=~/.gemini/usage/YYYY-MM-DD_gemini-telemetry.jsonl
+gemini chat --telemetry --telemetry-target=local --telemetry-outfile=~/.gemini/usage/{YYYY-MM-DD}/uuid.jsonl
 ```
 
 ### 2. OpenTelemetry Event Processing

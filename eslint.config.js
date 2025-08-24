@@ -6,4 +6,9 @@ export default ryoppippi({
 	typescript: {
 		tsconfigPath: './tsconfig.json',
 	},
+	ignores: [
+		'tsdown.config.ts',
+		'.lsmcp',
+		'dist/',
+	],
 });

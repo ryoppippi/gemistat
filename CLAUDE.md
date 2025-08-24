@@ -55,6 +55,7 @@ Always prefer indexed searches (tools with `_from_index` suffix) over reading en
 - `bun run typecheck` - Type check TypeScript files using tsgo
 - `bun run lint` - Run ESLint to check code quality
 - `bun run format` - Run ESLint with --fix to format code
+- `bun run test` - Run vitest tests (supports in-source testing with global imports)
 
 ## Running the Application
 

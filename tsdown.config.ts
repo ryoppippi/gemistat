@@ -3,10 +3,7 @@ import Macros from 'unplugin-macros/rolldown';
 
 export default defineConfig({
 	entry: [
-		'./index.ts',
-		'./src/*.ts',
-		'!./src/**/*.test.ts', // Exclude test files
-		'!./src/_*.ts', // Exclude internal files with underscore prefix
+		'src/index.ts',
 	],
 	outDir: 'dist',
 	format: 'esm',
@@ -14,12 +11,9 @@ export default defineConfig({
 	sourcemap: false,
 	minify: 'dce-only',
 	treeshake: true,
-	dts: {
-		tsgo: true,
-	},
+	dts:false,
 	publint: true,
 	unused: true,
-	exports: true,
 	nodeProtocol: true,
 	define: {
 		'import.meta.vitest': 'undefined',

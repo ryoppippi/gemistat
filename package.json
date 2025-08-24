@@ -4,7 +4,11 @@
 	"version": "0.1.0",
 	"private": true,
 	"description": "Gemini CLI wrapper with usage tracking",
-	"module": "src/index.ts",
+	"license": "MIT",
+	"bin": "./dist/index.js",
+	"files": [
+		"dist"
+	],
 	"scripts": {
 		"build": "tsdown",
 		"format": "bun run lint --fix",

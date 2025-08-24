@@ -20,9 +20,6 @@
 		"test": "vitest",
 		"typecheck": "tsgo --noEmit"
 	},
-	"dependencies": {
-		"zod": "^4.1.1"
-	},
 	"devDependencies": {
 		"@mizchi/lsmcp": "^0.10.0",
 		"@praha/byethrow": "^0.6.3",
@@ -42,7 +39,8 @@
 		"tsdown": "^0.14.1",
 		"unplugin-macros": "^0.18.0",
 		"unplugin-unused": "^0.5.2",
-		"vitest": "^3.2.4"
+		"vitest": "^3.2.4",
+		"zod": "^4.1.1"
 	},
 	"lint-staged": {
 		"*": [

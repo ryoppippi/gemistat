@@ -3,8 +3,9 @@
  * Based on ccusage implementation but simplified for Gemini-specific use
  */
 
-import { CACHE_TOKEN_COST_MULTIPLIER, LITELLM_PRICING_URL } from './_consts';
-import { prefetchGeminiPricing } from './_macro' with { type: 'macro' };
+import { CACHE_TOKEN_COST_MULTIPLIER } from './_consts.ts';
+import { fetchLiteLLMData } from './_litellm-fetch.ts';
+import { prefetchGeminiPricing } from './_macro.ts' with { type: 'macro' };
 
 export type ModelPricing = {
 	inputCostPerToken: number;
@@ -74,37 +75,24 @@ export async function fetchPricingData(offline = false): Promise<Map<string, Mod
 	}
 
 	try {
-		const response = await fetch(LITELLM_PRICING_URL);
-		if (!response.ok) {
-			throw new Error(`Failed to fetch pricing: ${response.statusText}`);
-		}
-
-		const data = await response.json() as Record<string, unknown>;
+		const data = await fetchLiteLLMData();
 		const pricing = new Map<string, ModelPricing>();
 
-		// Parse LiteLLM pricing data
+		// Convert all models to our ModelPricing format
 		for (const [modelName, modelData] of Object.entries(data)) {
-			if (typeof modelData === 'object' && modelData !== null) {
-				const model = modelData as Record<string, unknown>;
-				// Only process models with pricing information
-				if (
-					typeof model.input_cost_per_token === 'number'
-					|| typeof model.output_cost_per_token === 'number'
-				) {
-					const inputCost = typeof model.input_cost_per_token === 'number' ? model.input_cost_per_token : 0;
-					const outputCost = typeof model.output_cost_per_token === 'number' ? model.output_cost_per_token : 0;
-					const cachedCost = typeof model.cache_read_input_token_cost === 'number' ? model.cache_read_input_token_cost : undefined;
-					const maxInput = typeof model.max_input_tokens === 'number' ? model.max_input_tokens : undefined;
-					const maxTokens = typeof model.max_tokens === 'number' ? model.max_tokens : undefined;
-					pricing.set(modelName, {
-						inputCostPerToken: inputCost,
-						outputCostPerToken: outputCost,
-						cachedCostPerToken: cachedCost,
-						maxInputTokens: maxInput,
-						maxTokens,
-					});
-				}
-			}
+			const inputCost = modelData.input_cost_per_token ?? 0;
+			const outputCost = modelData.output_cost_per_token ?? 0;
+			const cachedCost = modelData.cache_read_input_token_cost;
+			const maxInput = modelData.max_input_tokens;
+			const maxTokens = modelData.max_tokens;
+
+			pricing.set(modelName, {
+				inputCostPerToken: inputCost,
+				outputCostPerToken: outputCost,
+				cachedCostPerToken: cachedCost,
+				maxInputTokens: maxInput,
+				maxTokens,
+			});
 		}
 
 		// Add experimental models

@@ -9,6 +9,7 @@ import {
 	formatUsageDataRow,
 } from '../_table';
 import { calculateTotals, loadDailyUsageData } from '../data-loader';
+import { logger } from '../logger';
 
 export const dailyCommand = define({
 	name: 'daily',
@@ -56,7 +57,7 @@ export const dailyCommand = define({
 		}
 		else {
 			// Display table format
-			process.stdout.write(pc.cyan('Gemini Usage Report - Daily\n\n'));
+			logger.box('Gemini Usage Report - Daily');
 
 			const table = createUsageReportTable({
 				firstColumnName: 'Date',

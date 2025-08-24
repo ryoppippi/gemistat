@@ -9,6 +9,7 @@ import {
 	formatUsageDataRow,
 } from '../_table';
 import { calculateTotals, loadMonthlyUsageData } from '../data-loader';
+import { logger } from '../logger';
 
 export const monthlyCommand = define({
 	name: 'monthly',
@@ -56,7 +57,7 @@ export const monthlyCommand = define({
 		}
 		else {
 			// Display table format
-			process.stdout.write(pc.cyan('Gemini Usage Report - Monthly\n\n'));
+			logger.box('Gemini Usage Report - Monthly');
 
 			const table = createUsageReportTable({
 				firstColumnName: 'Month',

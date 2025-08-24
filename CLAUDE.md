@@ -69,6 +69,27 @@ bun run index.ts --model gemini-2.0-flash-exp
 ./index.ts chat
 ```
 
+## Configuration
+
+The application supports environment variables for configuring output directories and files:
+
+- `GEMINI_USAGE_OUTPUT_DIR` - Directory to save telemetry and debug files (default: `~/.gemini/usage`)
+- `GEMINI_USAGE_TELEMETRY_FILE` - Telemetry file name (default: `gemini-telemetry.jsonl`)
+- `GEMINI_USAGE_DEBUG_FILE` - Debug log file name (default: `gemini-usage-debug.log`)
+
+Examples:
+
+```bash
+# Use default directory (~/.gemini/usage)
+./index.ts chat
+
+# Custom directory
+GEMINI_USAGE_OUTPUT_DIR=/tmp/gemini-logs ./index.ts chat
+
+# Custom directory and file names
+GEMINI_USAGE_OUTPUT_DIR=/tmp/logs GEMINI_USAGE_TELEMETRY_FILE=my-telemetry.jsonl ./index.ts chat
+```
+
 ## Architecture
 
 The codebase follows a modular architecture with three main components:

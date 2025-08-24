@@ -1,38 +1,38 @@
 {
-  "mcpServers": {
-    "context7": {
-      "type": "http",
-      "url": "https://mcp.context7.com/mcp"
-    },
-    "grep": {
-      "type": "http",
-      "url": "https://mcp.grep.app"
-    },
-    "lsmcp": {
-      "command": "bun",
-      "args": [
-        "lsmcp",
-        "-p",
-        "tsgo"
-      ]
-    },
-    "@praha/byethrow": {
-      "type": "stdio",
-      "command": "bun",
-      "args": [
-        "byethrow-mcp"
-      ],
-      "env": {}
-    },
-    "gunshi-doc": {
-      "command": "bun",
-      "args": [
-        "x",
-        "sitemcp",
-        "https://gunshi.dev/",
-        "--concurrency 10",
-        "--no-cache"
-      ]
-    }
-  }
+	"mcpServers": {
+		"context7": {
+			"type": "http",
+			"url": "https://mcp.context7.com/mcp"
+		},
+		"grep": {
+			"type": "http",
+			"url": "https://mcp.grep.app"
+		},
+		"lsmcp": {
+			"command": "bun",
+			"args": [
+				"lsmcp",
+				"-p",
+				"tsgo"
+			]
+		},
+		"@praha/byethrow": {
+			"type": "stdio",
+			"command": "bun",
+			"args": [
+				"byethrow-mcp"
+			],
+			"env": {}
+		},
+		"gunshi-doc": {
+			"command": "bun",
+			"args": [
+				"x",
+				"sitemcp",
+				"https://gunshi.dev/",
+				"--concurrency 10",
+				"--no-cache"
+			]
+		}
+	}
 }

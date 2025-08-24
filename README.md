@@ -52,12 +52,33 @@ The wrapper will display real-time token usage and costs while preserving all ge
 3. **Cost calculation**: Fetches latest pricing from LiteLLM and calculates costs
 4. **Live display**: Shows statistics in real-time without interfering with gemini-cli's output
 
+## Configuration
+
+You can customize where files are saved using environment variables:
+
+- `GEMINI_USAGE_OUTPUT_DIR` - Directory to save telemetry and debug files (default: `~/.gemini/usage`)
+- `GEMINI_USAGE_TELEMETRY_FILE` - Telemetry file name (default: `gemini-telemetry.jsonl`)
+- `GEMINI_USAGE_DEBUG_FILE` - Debug log file name (default: `gemini-usage-debug.log`)
+
+Examples:
+
+```bash
+# Use default directory (~/.gemini/usage)
+./index.ts chat
+
+# Custom directory
+GEMINI_USAGE_OUTPUT_DIR=/tmp/gemini-logs ./index.ts chat
+
+# Custom directory and file names
+GEMINI_USAGE_OUTPUT_DIR=/tmp/logs GEMINI_USAGE_TELEMETRY_FILE=my-telemetry.jsonl ./index.ts chat
+```
+
 ## Output files
 
 - `gemini-telemetry.jsonl` - Raw OpenTelemetry events from gemini-cli
 - `gemini-usage-debug.log` - Detailed debug information including all events and cost calculations
 
-Both files are added to `.gitignore` by default.
+Files are saved to the configured directory (default: `~/.gemini/usage`).
 
 ## Session Summary
 
@@ -65,7 +86,7 @@ After your session ends, you'll see a summary table like this:
 
 ```
 ═══════════════════════════════════════════════════════════════════
-                     Gemini Usage Summary                          
+                     Gemini Usage Summary
 ═══════════════════════════════════════════════════════════════════
 ┌─────────────────────────┬──────────┬────────────┬────────────┬────────────┬────────────┐
 │ Model                   │ Requests │   Input    │   Output   │   Total    │    Cost    │

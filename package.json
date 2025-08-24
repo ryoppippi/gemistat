@@ -1,7 +1,9 @@
 {
 	"name": "gemini-usage",
 	"type": "module",
+	"version": "0.1.0",
 	"private": true,
+	"description": "Gemini CLI wrapper with usage tracking",
 	"module": "index.ts",
 	"scripts": {
 		"build": "tsdown",
@@ -22,7 +24,6 @@
 		"@praha/byethrow": "^0.6.3",
 		"@praha/byethrow-mcp": "^0.1.2",
 		"@ryoppippi/eslint-config": "^0.3.7",
-		"@types/bun": "latest",
 		"@typescript/native-preview": "^7.0.0-dev.20250824.1",
 		"eslint": "^9.34.0",
 		"eslint-plugin-format": "^1.0.1",

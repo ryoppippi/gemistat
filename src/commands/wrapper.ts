@@ -1,9 +1,11 @@
 import { execSync, spawn } from 'node:child_process';
+import { randomUUID } from 'node:crypto';
 import { mkdirSync } from 'node:fs';
 import { homedir } from 'node:os';
 import { join } from 'node:path';
 import process from 'node:process';
 import { define } from 'gunshi';
+import { DATE_LOCALE } from '../_consts.ts';
 
 function which(command: string): string | null {
 	try {
@@ -31,14 +33,23 @@ export async function runGeminiWrapper(geminiArgs: string[]): Promise<void> {
 
 	// Configure output directory and files
 	const defaultOutputDir = join(homedir(), '.gemini', 'usage');
-	const outputDir = process.env.GEMISTAT_OUTPUT_DIR ?? defaultOutputDir;
+	const baseOutputDir = process.env.GEMISTAT_OUTPUT_DIR ?? defaultOutputDir;
 
-	// Add date prefix to telemetry file name
-	const datePrefix = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
-	const baseTelemetryFileName = process.env.GEMISTAT_TELEMETRY_FILE ?? 'gemini-telemetry.jsonl';
-	const telemetryFileName = `${datePrefix}_${baseTelemetryFileName}`;
+	// Create date-based directory structure: ~/.gemini/usage/{YYYY-MM-DD}/
+	// Use local timezone instead of UTC for date directory
+	const now = new Date();
+	const dateDir = new Intl.DateTimeFormat(DATE_LOCALE, {
+		year: 'numeric',
+		month: '2-digit',
+		day: '2-digit',
+	}).format(now); // YYYY-MM-DD format in local timezone
+	const outputDir = join(baseOutputDir, dateDir);
 
-	// Create output directory if it doesn't exist
+	// Generate UUID-based telemetry file name
+	const uuid = randomUUID();
+	const telemetryFileName = `${uuid}.jsonl`;
+
+	// Create date directory if it doesn't exist
 	mkdirSync(outputDir, { recursive: true });
 
 	// Construct telemetry file path

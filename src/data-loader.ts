@@ -1,40 +1,49 @@
 import type { DailyUsage, MonthlyUsage, TelemetryEvent, Totals } from './_types';
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { homedir } from 'node:os';
 import { join } from 'node:path';
 import { calculateCost } from './pricing';
+import { parseTelemetryContent } from './telemetry-parser';
 
 /**
  * Load and parse telemetry data from JSONL files
  */
 export async function loadTelemetryData(outputDir?: string): Promise<TelemetryEvent[]> {
 	const defaultOutputDir = join(homedir(), '.gemini', 'usage');
-	const dir = outputDir || defaultOutputDir;
-	const telemetryFile = join(dir, 'gemini-telemetry.jsonl');
+	const dir = outputDir ?? defaultOutputDir;
 
-	if (!existsSync(telemetryFile)) {
+	if (!existsSync(dir)) {
 		return [];
 	}
 
-	try {
-		const content = readFileSync(telemetryFile, 'utf-8');
-		const lines = content.trim().split('\n').filter(line => line.trim());
-		const events: TelemetryEvent[] = [];
+	const events: TelemetryEvent[] = [];
 
-		for (const line of lines) {
+	try {
+		// Read all files in the directory
+		const files = readdirSync(dir);
+
+		// Filter for telemetry files (.jsonl files)
+		const telemetryFiles = files.filter(file =>
+			file.endsWith('.jsonl'),
+		);
+
+		for (const fileName of telemetryFiles) {
+			const filePath = join(dir, fileName);
+
 			try {
-				const event = JSON.parse(line);
-				events.push(event);
+				const content = readFileSync(filePath, 'utf-8');
+				const fileEvents = parseTelemetryContent(content);
+				events.push(...fileEvents);
 			}
-			catch (error) {
-				console.warn(`Failed to parse telemetry line: ${line}`);
+			catch {
+				console.warn(`Failed to read telemetry file: ${filePath}`);
 			}
 		}
 
 		return events;
 	}
-	catch (error) {
-		console.warn(`Failed to read telemetry file: ${telemetryFile}`);
+	catch {
+		console.warn(`Failed to read telemetry directory: ${dir}`);
 		return [];
 	}
 }
@@ -42,7 +51,7 @@ export async function loadTelemetryData(outputDir?: string): Promise<TelemetryEv
 /**
  * Extract usage data from telemetry events
  */
-export async function extractUsageFromTelemetry(events: TelemetryEvent[]): Promise<{
+export async function extractUsageFromTelemetry(events: TelemetryEvent[], offline = false): Promise<{
 	model: string;
 	date: string;
 	inputTokens: number;
@@ -64,13 +73,13 @@ export async function extractUsageFromTelemetry(events: TelemetryEvent[]): Promi
 	for (const event of events) {
 		// Extract relevant data from telemetry events
 		// This will depend on the actual structure of your telemetry data
-		if (event.model && event.timestamp) {
+		if (event.model != null && event.model !== '' && event.timestamp != null && event.timestamp !== '') {
 			const date = new Date(event.timestamp).toISOString().split('T')[0]!;
 			const model = event.model;
-			const inputTokens = event.inputTokens || 0;
-			const outputTokens = event.outputTokens || 0;
+			const inputTokens = event.inputTokens ?? 0;
+			const outputTokens = event.outputTokens ?? 0;
 			const cacheCreationTokens = 0; // May need to extract from event
-			const cacheReadTokens = event.cachedTokens || 0;
+			const cacheReadTokens = event.cachedTokens ?? 0;
 
 			// Calculate cost
 			const costResult = await calculateCost(
@@ -78,10 +87,11 @@ export async function extractUsageFromTelemetry(events: TelemetryEvent[]): Promi
 				inputTokens,
 				outputTokens,
 				cacheReadTokens,
-				event.thoughtsTokens || 0,
-				event.toolTokens || 0,
+				event.thoughtsTokens ?? 0,
+				event.toolTokens ?? 0,
+				offline,
 			);
-			const cost = costResult?.totalCost || 0;
+			const cost = costResult?.totalCost ?? 0;
 
 			usageData.push({
 				model,
@@ -101,9 +111,9 @@ export async function extractUsageFromTelemetry(events: TelemetryEvent[]): Promi
 /**
  * Load daily usage data
  */
-export async function loadDailyUsageData(outputDir?: string): Promise<DailyUsage[]> {
+export async function loadDailyUsageData(outputDir?: string, offline = false): Promise<DailyUsage[]> {
 	const events = await loadTelemetryData(outputDir);
-	const usageData = await extractUsageFromTelemetry(events);
+	const usageData = await extractUsageFromTelemetry(events, offline);
 
 	// Group by date
 	const dailyMap = new Map<string, {
@@ -116,7 +126,7 @@ export async function loadDailyUsageData(outputDir?: string): Promise<DailyUsage
 	}>();
 
 	for (const data of usageData) {
-		const existing = dailyMap.get(data.date) || {
+		const existing = dailyMap.get(data.date) ?? {
 			inputTokens: 0,
 			outputTokens: 0,
 			cacheCreationTokens: 0,
@@ -152,9 +162,9 @@ export async function loadDailyUsageData(outputDir?: string): Promise<DailyUsage
 /**
  * Load monthly usage data
  */
-export async function loadMonthlyUsageData(outputDir?: string): Promise<MonthlyUsage[]> {
+export async function loadMonthlyUsageData(outputDir?: string, offline = false): Promise<MonthlyUsage[]> {
 	const events = await loadTelemetryData(outputDir);
-	const usageData = await extractUsageFromTelemetry(events);
+	const usageData = await extractUsageFromTelemetry(events, offline);
 
 	// Group by month (YYYY-MM format)
 	const monthlyMap = new Map<string, {
@@ -168,7 +178,7 @@ export async function loadMonthlyUsageData(outputDir?: string): Promise<MonthlyU
 
 	for (const data of usageData) {
 		const month = data.date.substring(0, 7); // Extract YYYY-MM from YYYY-MM-DD
-		const existing = monthlyMap.get(month) || {
+		const existing = monthlyMap.get(month) ?? {
 			inputTokens: 0,
 			outputTokens: 0,
 			cacheCreationTokens: 0,

@@ -29,10 +29,10 @@ export const monthlyCommand = define({
 		},
 	},
 	async run(ctx) {
-		const { dir, json, compact, offline } = ctx.values;
+		const { dir, json, compact, offline, since, until } = ctx.values;
 
 		// Load monthly usage data
-		const monthlyData = await loadMonthlyUsageData(dir, offline);
+		const monthlyData = await loadMonthlyUsageData(dir, offline, since, until);
 
 		if (monthlyData.length === 0) {
 			if (json === true) {

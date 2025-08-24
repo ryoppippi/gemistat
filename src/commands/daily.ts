@@ -29,10 +29,10 @@ export const dailyCommand = define({
 		},
 	},
 	async run(ctx) {
-		const { dir, json, compact, offline } = ctx.values;
+		const { dir, json, compact, offline, since, until } = ctx.values;
 
 		// Load daily usage data
-		const dailyData = await loadDailyUsageData(dir, offline);
+		const dailyData = await loadDailyUsageData(dir, offline, since, until);
 
 		if (dailyData.length === 0) {
 			if (json === true) {

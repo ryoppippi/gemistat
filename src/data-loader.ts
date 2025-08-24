@@ -2,6 +2,7 @@ import type { DailyUsage, MonthlyUsage, TelemetryEvent, Totals } from './_schema
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { homedir } from 'node:os';
 import { join } from 'node:path';
+import { filterByDateRange } from './_date-utils.ts';
 import { logger } from './logger';
 import { calculateCost } from './pricing';
 import { parseTelemetryContent } from './telemetry-parser';
@@ -112,7 +113,7 @@ export async function extractUsageFromTelemetry(events: TelemetryEvent[], offlin
 /**
  * Load daily usage data
  */
-export async function loadDailyUsageData(outputDir?: string, offline = false): Promise<DailyUsage[]> {
+export async function loadDailyUsageData(outputDir?: string, offline = false, since?: string, until?: string): Promise<DailyUsage[]> {
 	const events = await loadTelemetryData(outputDir);
 	const usageData = await extractUsageFromTelemetry(events, offline);
 
@@ -146,8 +147,8 @@ export async function loadDailyUsageData(outputDir?: string, offline = false): P
 		dailyMap.set(data.date, existing);
 	}
 
-	// Convert to array and sort by date
-	return Array.from(dailyMap.entries())
+	// Convert to array, filter by date range, and sort by date
+	const dailyData = Array.from(dailyMap.entries())
 		.map(([date, data]) => ({
 			date,
 			inputTokens: data.inputTokens,
@@ -158,12 +159,15 @@ export async function loadDailyUsageData(outputDir?: string, offline = false): P
 			modelsUsed: Array.from(data.models),
 		}))
 		.sort((a, b) => a.date.localeCompare(b.date));
+
+	// Apply date filtering
+	return filterByDateRange(dailyData, item => item.date, since, until);
 }
 
 /**
  * Load monthly usage data
  */
-export async function loadMonthlyUsageData(outputDir?: string, offline = false): Promise<MonthlyUsage[]> {
+export async function loadMonthlyUsageData(outputDir?: string, offline = false, since?: string, until?: string): Promise<MonthlyUsage[]> {
 	const events = await loadTelemetryData(outputDir);
 	const usageData = await extractUsageFromTelemetry(events, offline);
 
@@ -198,8 +202,8 @@ export async function loadMonthlyUsageData(outputDir?: string, offline = false):
 		monthlyMap.set(month, existing);
 	}
 
-	// Convert to array and sort by month
-	return Array.from(monthlyMap.entries())
+	// Convert to array, filter by date range, and sort by month
+	const monthlyData = Array.from(monthlyMap.entries())
 		.map(([month, data]) => ({
 			month,
 			inputTokens: data.inputTokens,
@@ -210,6 +214,9 @@ export async function loadMonthlyUsageData(outputDir?: string, offline = false):
 			modelsUsed: Array.from(data.models),
 		}))
 		.sort((a, b) => a.month.localeCompare(b.month));
+
+	// Apply date filtering using month as date source
+	return filterByDateRange(monthlyData, item => item.month, since, until);
 }
 
 /**

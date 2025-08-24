@@ -10,5 +10,9 @@
     "@types/bun": "latest",
     "@typescript/native-preview": "^7.0.0-dev.20250824.1"
   },
-  "dependencies": {}
+  "dependencies": {},
+  "scripts": {
+    "start": "bun run index.ts",
+    "typecheck": "tsgo --noEmit"
+  }
 }

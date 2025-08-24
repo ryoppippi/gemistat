@@ -6,6 +6,7 @@
 import { CACHE_TOKEN_COST_MULTIPLIER } from './_consts.ts';
 import { fetchLiteLLMData } from './_litellm-fetch.ts';
 import { prefetchGeminiPricing } from './_macro.ts' with { type: 'macro' };
+import { logger } from './logger.ts';
 
 export type ModelPricing = {
 	inputCostPerToken: number;
@@ -64,6 +65,7 @@ export async function fetchPricingData(offline = false): Promise<Map<string, Mod
 			}
 
 			pricingCache = pricing;
+			logger.info(`Using cached pricing data for ${pricing.size} models`);
 			return pricing;
 		}
 		catch {
@@ -75,6 +77,7 @@ export async function fetchPricingData(offline = false): Promise<Map<string, Mod
 	}
 
 	try {
+		logger.warn('Fetching latest model pricing from LiteLLM...');
 		const data = await fetchLiteLLMData();
 		const pricing = new Map<string, ModelPricing>();
 
@@ -103,7 +106,7 @@ export async function fetchPricingData(offline = false): Promise<Map<string, Mod
 		}
 
 		pricingCache = pricing;
-		// Don't use console.log since it interferes with UI
+		logger.info(`Loaded pricing for ${pricing.size} models`);
 		return pricing;
 	}
 	catch {
@@ -120,10 +123,11 @@ export async function fetchPricingData(offline = false): Promise<Map<string, Mod
 			}
 
 			pricingCache = pricing;
+			logger.info(`Using cached pricing data for ${pricing.size} models`);
 			return pricing;
 		}
 		catch {
-			// Use logger for errors, but avoid during UI display to prevent interference
+			logger.warn('Failed to fetch model pricing from LiteLLM, falling back to experimental models only');
 			// Return experimental models only as fallback
 			const fallback = new Map(Object.entries(EXPERIMENTAL_MODELS));
 			pricingCache = fallback;

@@ -1,5 +1,9 @@
 {
 	"mcpServers": {
+		"zod": {
+			"type": "http",
+			"url": "https://mcp.inkeep.com/zod/mcp"
+		},
 		"context7": {
 			"type": "http",
 			"url": "https://mcp.context7.com/mcp"

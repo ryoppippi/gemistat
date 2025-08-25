@@ -84,21 +84,21 @@ For detailed setup instructions, see the [gemini-cli documentation](https://gith
 
 ## Usage
 
-⚠️ **Remember**: Always use `bunx gemistat` instead of `gemini` commands to ensure your usage data is captured and logged!
+⚠️ **Remember**: `gemistat` acts as an alias for `gemini` commands with telemetry enabled. Always use `bunx gemistat` instead of `gemini` commands to ensure your usage data is captured and logged!
 
 ### Basic Commands
 
 ```bash
-# Wrapper mode (default) - run gemini-cli with telemetry
+# Wrapper mode (default) - acts as gemini alias with telemetry enabled
 bunx gemistat [gemini-cli-options]
 bunx gemistat chat
 bunx gemistat --model gemini-2.0-flash-exp
 bunx gemistat -p "hello how are you"
 
-# Daily usage report
+# Stats mode - view daily usage statistics (from saved telemetry data)
 bunx gemistat daily
 
-# Monthly usage report
+# Stats mode - view monthly usage statistics (from saved telemetry data)
 bunx gemistat monthly
 ```
 
@@ -133,17 +133,17 @@ bunx gemistat [any-options]
 ### Advanced Usage
 
 ```bash
-# Daily reports with filtering
+# Stats mode - daily reports with filtering (from saved telemetry data)
 bunx gemistat daily --since 2024-01-01 --until 2024-01-31
 bunx gemistat daily --json                 # JSON output
 bunx gemistat daily --compact              # Force compact tables
 bunx gemistat daily --offline              # Use cached pricing
 
-# Monthly aggregations
+# Stats mode - monthly aggregations (from saved telemetry data)
 bunx gemistat monthly --since 2024-01 --until 2024-03
 bunx gemistat monthly --json
 
-# Custom data directory
+# Custom data directory for stats viewing
 bunx gemistat daily --dir /path/to/telemetry/files
 ```
 

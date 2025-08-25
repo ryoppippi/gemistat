@@ -2,7 +2,6 @@
 	"name": "gemistat",
 	"type": "module",
 	"version": "0.0.0",
-	"private": true,
 	"description": "Gemini CLI wrapper with usage tracking",
 	"license": "MIT",
 	"bin": "./dist/index.js",

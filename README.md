@@ -18,7 +18,23 @@
 
 A powerful wrapper for [gemini-cli](https://github.com/google-gemini/gemini-cli) that provides detailed token usage tracking and cost analysis using OpenTelemetry data.
 
-Normally you would use `gemini` commands, but **logs aren't saved at all**. Use `bunx gemistat` instead to automatically capture conversation logs and detailed telemetry data with OpenTelemetry, enabling token tracking and cost analytics.
+⚠️ **Important**: Replace your regular `gemini` commands with `bunx gemistat` to ensure logs are saved!
+
+Regular `gemini` commands **don't save any logs or usage data**. You must use `bunx gemistat` instead to:
+
+- Automatically capture conversation logs and detailed telemetry
+- Enable token usage tracking and cost analytics
+- Store data with OpenTelemetry for analysis
+
+```bash
+# ❌ Don't use regular gemini (no logs saved)
+# gemini chat
+# gemini --model gemini-2.0-flash-exp
+
+# ✅ Use gemistat instead (logs automatically saved)
+bunx gemistat chat
+bunx gemistat --model gemini-2.0-flash-exp
+```
 
 ## Features
 
@@ -61,13 +77,14 @@ pnpm dlx gemistat
 # Install gemini-cli globally
 npm install -g @google/generative-ai-cli
 
-# Configure with your API key
-gemini config set apiKey YOUR_API_KEY
+# Theen login with your Google account
 ```
 
 For detailed setup instructions, see the [gemini-cli documentation](https://github.com/google-gemini/gemini-cli#installation).
 
 ## Usage
+
+⚠️ **Remember**: Always use `bunx gemistat` instead of `gemini` commands to ensure your usage data is captured and logged!
 
 ### Basic Commands
 
@@ -83,6 +100,34 @@ bunx gemistat daily
 
 # Monthly usage report
 bunx gemistat monthly
+```
+
+### Command Replacement Guide
+
+Replace all your regular `gemini` commands with `bunx gemistat`:
+
+```bash
+# Chat interactions
+# instead of "gemini chat" ...
+bunx gemistat chat
+# instead of "gemini -p 'Tell me a joke'" ...
+bunx gemistat -p "Tell me a joke"
+
+# Model selection
+# instead of "gemini --model gemini-2.0-flash-exp" ...
+bunx gemistat --model gemini-2.0-flash-exp
+# instead of "gemini chat --model gemini-1.5-pro" ...
+bunx gemistat chat --model gemini-1.5-pro
+
+# File operations
+# instead of "gemini -f document.txt" ...
+bunx gemistat -f document.txt
+# instead of "gemini chat --file image.png" ...
+bunx gemistat chat --file image.png
+
+# All other gemini-cli options work exactly the same
+# instead of "gemini [any-options]" ...
+bunx gemistat [any-options]
 ```
 
 ### Advanced Usage
@@ -152,6 +197,22 @@ GEMISTAT_OUTPUT_DIR=/tmp/gemini-logs ./index.ts chat
 ## How It Works
 
 gemistat works by leveraging gemini-cli's built-in OpenTelemetry support to capture detailed usage metrics.
+
+### Why You Must Use gemistat Instead of Regular gemini Commands
+
+**The Problem**: Regular `gemini` commands **don't save any usage data**
+
+- No token usage information is captured
+- No cost tracking is possible
+- No historical usage analysis
+- Conversations are lost after the session ends
+
+**The Solution**: `bunx gemistat` automatically enables telemetry
+
+- Captures detailed token metrics for each API call
+- Records input tokens, output tokens, cached tokens, and more
+- Saves all data with timestamps for historical analysis
+- Enables accurate cost calculation using live pricing data
 
 ### Why OpenTelemetry?
 

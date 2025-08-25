@@ -296,6 +296,10 @@ bunx gemistat daily --dir ~/.gemini/usage
 
 [MIT](LICENSE) © [@ryoppippi](https://github.com/ryoppippi)
 
+## Related Projects
+
+- [ccusage.com](https://ccusage.com) - Claude usage analytics and tracking
+
 ## Credits
 
 - Built for [gemini-cli](https://github.com/google-gemini/gemini-cli) by Google

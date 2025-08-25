@@ -17,6 +17,9 @@
 	"files": [
 		"dist"
 	],
+	"engines": {
+		"node": ">=20.19.4"
+	},
 	"scripts": {
 		"build": "tsdown",
 		"format": "bun run lint --fix",

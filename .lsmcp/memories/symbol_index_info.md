@@ -6,7 +6,7 @@ updated: 2025-08-24T12:49:53.399Z
 ## LSP Symbol Index Configuration
 
 **Project:** gemini-usage (TypeScript/Bun project)
-**Root:** /Users/ryoppippi/ghq/github.com/ryoppippi/gemini-usage
+**Root:** /Users/ryoppippi/ghq/github.com/ryoppippi/gemistat
 **Language:** TypeScript
 **LSP Server:** tsgo
 

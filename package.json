@@ -1,7 +1,7 @@
 {
 	"name": "gemistat",
 	"type": "module",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "Gemini CLI wrapper with usage tracking",
 	"license": "MIT",
 	"funding": "https://github.com/ryoppippi/gemistat?sponsor=1",

@@ -18,7 +18,7 @@
 		"dist"
 	],
 	"engines": {
-		"node": ">=20.19.4"
+		"node": ">=22.18.0"
 	},
 	"scripts": {
 		"build": "tsdown",

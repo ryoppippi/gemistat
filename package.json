@@ -4,6 +4,15 @@
 	"version": "0.0.0",
 	"description": "Gemini CLI wrapper with usage tracking",
 	"license": "MIT",
+	"funding": "https://github.com/ryoppippi/gemistat?sponsor=1",
+	"homepage": "https://github.com/ryoppippi/gemistat#readme",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/ryoppippi/gemistat.git"
+	},
+	"bugs": {
+		"url": "https://github.com/ryoppippi/gemistat/issues"
+	},
 	"bin": "./dist/index.js",
 	"files": [
 		"dist"

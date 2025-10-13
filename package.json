@@ -44,7 +44,7 @@
 		"cli-table3": "^0.6.5",
 		"consola": "^3.4.2",
 		"eslint": "^9.34.0",
-		"eslint-plugin-format": "^1.0.1",
+		"eslint-plugin-format": "^1.0.2",
 		"gunshi": "latest",
 		"lint-staged": "^16.1.6",
 		"picocolors": "^1.1.1",

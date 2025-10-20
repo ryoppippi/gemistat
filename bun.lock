@@ -7,7 +7,7 @@
         "@mizchi/lsmcp": "^0.10.0",
         "@oxc-project/runtime": "^0.82.3",
         "@praha/byethrow": "^0.6.3",
-        "@praha/byethrow-mcp": "^0.1.4",
+        "@praha/byethrow-mcp": "^0.1.6",
         "@ryoppippi/eslint-config": "^0.3.7",
         "@types/bun": "^1.2.23",
         "@typescript/native-preview": "^7.0.0-dev.20251009.1",
@@ -188,7 +188,7 @@
 
     "@praha/byethrow": ["@praha/byethrow@0.6.3", "", { "dependencies": { "@standard-schema/spec": "^1.0.0" } }, "sha512-WeHnDRzan8Zx4Lj3wCKy88K0zFZqnGKBho2QuTAM94yutkLDOsDSIYDbu/OXgnc+bQnnomCOteJNtE53o7l+Zw=="],
 
-    "@praha/byethrow-mcp": ["@praha/byethrow-mcp@0.1.4", "", { "dependencies": { "@modelcontextprotocol/sdk": "^1.12.3", "citty": "^0.1.6", "consola": "^3.4.2", "zod": "^3.23.8" }, "bin": { "byethrow-mcp": "dist/index.js" } }, "sha512-r0PnzP64v83e6Qdnke2/TPjQM1bTk3rWgHFFpJVq6uvMi9aOHZ514m/VoHDOwNLXx0lYIWHTphWEGPRR+ceazg=="],
+    "@praha/byethrow-mcp": ["@praha/byethrow-mcp@0.1.6", "", { "dependencies": { "@modelcontextprotocol/sdk": "^1.12.3", "citty": "^0.1.6", "consola": "^3.4.2", "zod": "^3.23.8" }, "bin": { "byethrow-mcp": "dist/index.js" } }, "sha512-GYJvfOvRbqylaKjZRiVydO1XJefq1LQ/60Smj4mztWvHeegl78aHVcTl5duQtpSUapyfL5UuDpRvK5SviCiUEA=="],
 
     "@publint/pack": ["@publint/pack@0.1.2", "", {}, "sha512-S+9ANAvUmjutrshV4jZjaiG8XQyuJIZ8a4utWmN/vW1sgQ9IfBnPndwkmQYw53QmouOIytT874u65HEmu6H5jw=="],
 

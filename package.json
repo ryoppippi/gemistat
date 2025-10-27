@@ -35,7 +35,7 @@
 		"@mizchi/lsmcp": "^0.10.0",
 		"@oxc-project/runtime": "^0.82.3",
 		"@praha/byethrow": "^0.6.3",
-		"@praha/byethrow-mcp": "^0.1.6",
+		"@praha/byethrow-mcp": "^0.1.7",
 		"@ryoppippi/eslint-config": "^0.3.7",
 		"@types/bun": "^1.2.23",
 		"@typescript/native-preview": "^7.0.0-dev.20251017.1",

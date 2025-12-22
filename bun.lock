@@ -6,7 +6,7 @@
       "name": "gemistat",
       "devDependencies": {
         "@mizchi/lsmcp": "^0.10.0",
-        "@oxc-project/runtime": "^0.82.3",
+        "@oxc-project/runtime": "^0.104.0",
         "@praha/byethrow": "^0.6.3",
         "@praha/byethrow-mcp": "^0.1.7",
         "@ryoppippi/eslint-config": "^0.3.7",
@@ -179,7 +179,7 @@
 
     "@nodelib/fs.walk": ["@nodelib/fs.walk@1.2.8", "", { "dependencies": { "@nodelib/fs.scandir": "2.1.5", "fastq": "^1.6.0" } }, "sha512-oGB+UxlgWcgQkgwo8GcEGwemoTFt3FIO9ababBmaGwXIoBKZ+GTy0pP185beGg7Llih/NSHSV2XAs1lnznocSg=="],
 
-    "@oxc-project/runtime": ["@oxc-project/runtime@0.82.3", "", {}, "sha512-LNh5GlJvYHAnMurO+EyA8jJwN1rki7l3PSHuosDh2I7h00T6/u9rCkUjg/SvPmT1CZzvhuW0y+gf7jcqUy/Usg=="],
+    "@oxc-project/runtime": ["@oxc-project/runtime@0.104.0", "", {}, "sha512-EnRa1gCbvpMIRD2qe75qb4Cnmi+1nY7Ezar83b/JSjP1oRlVy8D/eEhxZw4Gq4zbgu4yErMVHACktCDBdQQW8w=="],
 
     "@oxc-project/types": ["@oxc-project/types@0.82.2", "", {}, "sha512-WMGSwd9FsNBs/WfqIOH0h3k1LBdjZJQGYjGnC+vla/fh6HUsu5HzGPerRljiq1hgMQ6gs031YJR12VyP57b/hQ=="],
 

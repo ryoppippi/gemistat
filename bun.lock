@@ -7,7 +7,7 @@
       "devDependencies": {
         "@mizchi/lsmcp": "^0.10.0",
         "@oxc-project/runtime": "^0.137.0",
-        "@praha/byethrow": "^0.10.1",
+        "@praha/byethrow": "^0.12.0",
         "@praha/byethrow-mcp": "^0.10.1",
         "@ryoppippi/eslint-config": "^0.3.7",
         "@types/bun": "^1.2.23",
@@ -187,7 +187,7 @@
 
     "@pkgr/core": ["@pkgr/core@0.1.2", "", {}, "sha512-fdDH1LSGfZdTH2sxdpVMw31BanV28K/Gry0cVFxaNP77neJSkd82mM8ErPNYs9e+0O7SdHBLTDzDgwUuy18RnQ=="],
 
-    "@praha/byethrow": ["@praha/byethrow@0.10.1", "", { "dependencies": { "@standard-schema/spec": "^1.0.0" }, "peerDependencies": { "typescript": ">=5.0.0" } }, "sha512-2pM0a6OQn6eMhTOMzQyo/3sWHpcvLlRUh4d0YkCqg9qnQMmRH8mJt+SI3PEbcp86dpR90Q08byrtGO6tjS3njw=="],
+    "@praha/byethrow": ["@praha/byethrow@0.12.0", "", { "dependencies": { "@standard-schema/spec": "^1.0.0" }, "peerDependencies": { "typescript": ">=5.0.0" } }, "sha512-Q3dRHW8aGqYbEe/W5YKrik6GbtfLGdCrCVcDcP/YJe4uhhbbrkEw9XoRuPZhfMb4uLrUXk27h4phK3I8+cAdRw=="],
 
     "@praha/byethrow-mcp": ["@praha/byethrow-mcp@0.10.1", "", { "dependencies": { "@modelcontextprotocol/sdk": "^1.12.3", "citty": "^0.2.0", "consola": "^3.4.2", "zod": "^4.1.13" }, "bin": { "byethrow-mcp": "dist/index.js" } }, "sha512-1EWkW/6DtHDQY+q1ucoCRDqZ6NNhUZDb/1SOla7+/Qe9mr7VbCGJ4lNWRWUncZ1F4EqgJ/c/PlS2JbZ/TMhG7Q=="],
 

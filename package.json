@@ -54,7 +54,7 @@
 		"tsdown": "^0.14.1",
 		"unplugin-macros": "^0.18.0",
 		"unplugin-unused": "^0.5.6",
-		"vitest": "^3.2.6",
+		"vitest": "^3.2.7",
 		"zod": "^4.1.13"
 	},
 	"lint-staged": {

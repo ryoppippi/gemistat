@@ -9,7 +9,7 @@
         "@oxc-project/runtime": "^0.140.0",
         "@praha/byethrow": "^0.12.0",
         "@praha/byethrow-mcp": "^0.10.1",
-        "@ryoppippi/eslint-config": "^0.3.7",
+        "@ryoppippi/eslint-config": "^0.4.0",
         "@types/bun": "^1.2.23",
         "@typescript/native-preview": "^7.0.0-dev.20260707.2",
         "bumpp": "^10.2.3",
@@ -265,7 +265,7 @@
 
     "@rollup/rollup-win32-x64-msvc": ["@rollup/rollup-win32-x64-msvc@4.48.0", "", { "os": "win32", "cpu": "x64" }, "sha512-sq0hHLTgdtwOPDB5SJOuaoHyiP1qSwg+71TQWk8iDS04bW1wIE0oQ6otPiRj2ZvLYNASLMaTp8QRGUVZ+5OL5A=="],
 
-    "@ryoppippi/eslint-config": ["@ryoppippi/eslint-config@0.3.7", "", { "dependencies": { "@antfu/eslint-config": "^4.11.0", "eslint-flat-config-utils": "^2.0.1", "eslint-plugin-ryoppippi": "^0.2.2", "pkg-types": "^2.1.0" }, "peerDependencies": { "@next/eslint-plugin-next": "^15.2.4", "@tanstack/eslint-plugin-query": ">= 5.68.0", "@tanstack/eslint-plugin-router": ">= 1.114.29", "eslint": ">= 9.23.0", "eslint-plugin-tailwindcss": "^3.18.0" }, "optionalPeers": ["@next/eslint-plugin-next", "@tanstack/eslint-plugin-query", "@tanstack/eslint-plugin-router", "eslint-plugin-tailwindcss"] }, "sha512-T0dW35+AtaaBfm0Ta1zl8/Xn0PD5NJoajCDgKr16ywwmg9q0xWjfwYCBaCJr+6QAKHokUH6109Q/nUf30pq9nA=="],
+    "@ryoppippi/eslint-config": ["@ryoppippi/eslint-config@0.4.0", "", { "dependencies": { "@antfu/eslint-config": "^4.19.0", "eslint-flat-config-utils": "^2.1.1", "eslint-plugin-ryoppippi": "^0.2.6", "pkg-types": "^2.3.0" }, "peerDependencies": { "@next/eslint-plugin-next": "^15.3.5", "@tanstack/eslint-plugin-query": ">= 5.83.1", "@tanstack/eslint-plugin-router": ">= 1.131.2", "eslint": ">= 9.33.0", "eslint-plugin-tailwindcss": "^3.18.2" }, "optionalPeers": ["@next/eslint-plugin-next", "@tanstack/eslint-plugin-query", "@tanstack/eslint-plugin-router", "eslint-plugin-tailwindcss"] }, "sha512-Ecx2T0WwIci7E1tvLpEJvdHqwj/2VgXv2oRib59HR2Gnk9i6qJyNtONclKoWr9PHDKDOl58xF6U9TxEn4zABTA=="],
 
     "@standard-schema/spec": ["@standard-schema/spec@1.0.0", "", {}, "sha512-m2bOd0f2RT9k8QJx1JN85cZYyH1RqFBdlwtkSlf4tBDYLCiiZnv1fIIwacK6cqwXavOydf0NPToMQgpKq+dVlA=="],
 
